@@ -1,0 +1,32 @@
+.technologies-row {
+ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    margin-top: 20px;
+    
+  }
+  
+  .technology-item {
+    text-align: center;
+    margin: 0.7rem;
+  }
+  
+  .technology-item .icon {
+    font-size: 44px;
+    color: #007bff;
+   
+  }
+
+
+  /* Estilos para pantallas grandes (computadoras de escritorio)
+  @media (min-width: 1024px) {
+    .technologies-row {
+      margin-top: 0;
+    }
+  } */
+
+
+  
