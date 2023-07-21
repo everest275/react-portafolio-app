@@ -1,6 +1,11 @@
 import React from 'react';
 import { MdCheckCircle, MdError } from 'react-icons/md';
 import Modal from 'react-modal';
+// Identifica el elemento raíz de tu aplicación
+const appRootElement = document.getElementById('root');
+
+// Llama a setAppElement para evitar el aviso de accesibilidad
+Modal.setAppElement(appRootElement);
 
 // Estilos del modal (usando tailwind-css)
 const customStyles = {

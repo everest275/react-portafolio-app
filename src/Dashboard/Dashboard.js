@@ -22,9 +22,9 @@ export const Dashboard = () => {
     <>
       <progress max="100" value="0"></progress>
       <nav>
-      <h1 class="text-4xl font-bold text-center text-black">Portfolio</h1>
+      <h1 className="text-4xl font-bold text-center text-black">Portfolio</h1>
       </nav>
-      <div class="container">
+      <div className="container">
         <section>
           <AboutMe/>
         </section>

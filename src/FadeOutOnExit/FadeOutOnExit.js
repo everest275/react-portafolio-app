@@ -6,6 +6,7 @@ const FadeInOut = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const currentContainerRef = containerRef.current;
     const observer = new IntersectionObserver((entries) => {
       const [entry] = entries;
       setIsVisible(entry.isIntersecting);
@@ -16,8 +17,8 @@ const FadeInOut = ({ children }) => {
     }
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
+      if (currentContainerRef) {
+        observer.unobserve(currentContainerRef);
       }
     };
   }, []);
