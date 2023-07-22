@@ -20,12 +20,34 @@ const EmailButtonOpen = () => {
     setModalIsOpen(false);
   };
 
+   // Estilo para cambiar el tamaño del Modal
+   const customModalStyle = {
+    overlay: {
+      background:"#f8f4ff",
+      zIndex: 9999, // Asegurarse de que el Modal esté en la parte superior
+    },
+    content: {
+      overflowY:'hidden',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      border: 'none', // Sin bordes
+     
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  };
+
   return (
     <div>
       <div className="flex justify-center items-center">
       <button  className="mx-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"onClick={openModal}>Enviarme un mensaje</button>
       </div>
       <Modal
+        style={customModalStyle}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Formulario de Envío de Correo"

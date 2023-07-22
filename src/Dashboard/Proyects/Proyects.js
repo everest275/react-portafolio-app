@@ -32,7 +32,7 @@ const Projects = () => {
       technologies: "React, Tailwind CSS, CSS, Animate.js, Gsap",
       fecha_lanzamiento: "Julio-2023",
       detalle: "Sitio web de presentacion profesional personal para muestra de proyectos y contacto con mi persona.",
-      github: "/",
+      github: "https://github.com/everest275/react-portafolio-app",
       url: "/"
     }
     // Agrega más objetos para más proyectos

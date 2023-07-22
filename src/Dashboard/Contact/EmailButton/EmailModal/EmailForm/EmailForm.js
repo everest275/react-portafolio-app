@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './emailForm.css'
-import EmailConfirmation from './EmailConfirmation/EmailConfirmation';
-
+import Modal from 'react-modal'
+import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 
 const EmailForm = () => {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showErrorModal, setShowErrorModal] = useState(false);
-  const [clickeado, setClickeado] = useState("");
+
+  
 
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState('');
@@ -18,10 +17,7 @@ const EmailForm = () => {
   const handleRecaptchaVerify = (response) => {
     setIsVerified(true);
   };
-  const handleAceptAndClose=()=>{
-    setShowSuccessModal(false)
-    window.location.href='/'
-  }
+
 
   const handleRecaptchaExpired = () => {
     setIsVerified(false);
@@ -29,7 +25,7 @@ const EmailForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setClickeado('clickeado')
+    
     if (isVerified) {
       // Envía el correo usando EmailJS
       const templateParams = {
@@ -39,22 +35,58 @@ const EmailForm = () => {
       };
       emailjs.send('Josuenito01', 'template_i0pvfrr', templateParams, 'faSPmIB60RqFOXbXc')
         .then((result) => {
-          setShowSuccessModal(true);
+          console.log(result)
+          openConfirmationModal(true);
+          window.location.href="/"
           
           
         }, (error) => {
-          setShowErrorModal(true);
+          console.log(error)
+          openConfirmationModal(false);
+          
         });
     } else {
-      setShowErrorModal(true);
+      openConfirmationModal(false);
     }
     
   };
 
+    const customRecaptchaContainerStyle = {
+      width: '100px', // Ancho deseado del contenedor del ReCAPTCHA
+      height: '100px', // Altura deseada del contenedor del ReCAPTCHA
+      marginLeft:'-30px'
+    };
+
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+
+  const openConfirmationModal = (success) => {
+    setIsSuccess(success);
+    setIsConfirmationOpen(true);
+    
+  };
+
+  const closeConfirmationModal = () => {
+    setIsConfirmationOpen(false);
+    
+  };
+
+ const handleConfirmationAcept =(e)=>{
+   e.preventDefault();
+   if(isSuccess){
+window.location.href="/"
+   }else{
+closeConfirmationModal()
+   }
+
+
+  }
+  
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 px-4">
+      <form onSubmit={handleSubmit} className="max-w-sm mx-auto mt-8 px-4">
        
         <div className="mb-4">
           <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">Correo electrónico:</label>
@@ -82,37 +114,67 @@ const EmailForm = () => {
           />
         </div>
         <div className="mb-4">
-          <ReCAPTCHA
+          <ReCAPTCHA style={customRecaptchaContainerStyle}
             sitekey="6LdaczwnAAAAAK3AjmOKcCw1WeHwRfeAkbMjS8cS"
             onChange={handleRecaptchaVerify}
             onExpired={handleRecaptchaExpired}
           />
         </div>
+        <div className="flex items-center justify-center">
         <button
           type="submit" name="submit-form-email"
-          className={clickeado+" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none"}
+          className= "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
         >
           Enviar
         </button>
+    </div>
+        
       </form>
-            {/* Modal de éxito */}
-            <EmailConfirmation
-        isOpen={showSuccessModal}
-        title="Correo enviado con éxito"
-        message="¡El correo se ha enviado correctamente!"
-        icon="success"
-        onClose={() => handleAceptAndClose() }
-      />
-
-      {/* Modal de error */}
-      <EmailConfirmation
-        isOpen={showErrorModal}
-        title="Error al enviar el correo"
-        message="Hubo un problema al enviar el correo. Por favor, inténtalo de nuevo más tarde."
-        icon="error"
-        onClose={() => setShowErrorModal(false)}
-      />
-
+      <Modal
+        isOpen={isConfirmationOpen}
+        onRequestClose={closeConfirmationModal}
+        contentLabel="Confirmación"
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            zIndex: 9999,
+          },
+          content: {
+            maxWidth: '300px',
+            margin: 'auto',
+            border: 'none',
+            overflowY:'hidden',
+            background: 'white',
+            borderRadius: '8px',
+            padding: '20px',
+            maxHeight:'200px'
+          },
+        }}
+      >
+        {isSuccess ? (
+          <>
+            <FaCheckCircle size={40} color="green" />
+            <h2>¡Éxito!</h2>
+            <p>El formulario ha sido enviado correctamente.</p>
+            
+           
+          </>
+        ) : (
+          <>
+            <FaExclamationCircle size={40} color="red" />
+            <h2>Error</h2>
+            <p>Ha ocurrido un error al enviar el formulario.</p>
+            <div className="flex items-center justify-center">
+        <button onClick={(e)=>{handleConfirmationAcept(e)}}
+          type="button"
+          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded focus:outline-none"
+        >
+            Aceptar
+        </button>
+    </div>
+          </>
+        )}
+      </Modal>
     </div>
   );
 };

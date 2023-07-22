@@ -9,7 +9,7 @@ window.location.href="https://www.facebook.com/campos.a.josue.5/"
 }
 const handleLinkedin=()=>{
   
-  window.location.href="https://www.linkedin.com/in/everest-aguilar-97316a209/"
+  window.location.href="https://www.linkedin.com/in/everest-aguilar-campos-7b2280205/"
   }
   const handleGithub=()=>{
     
@@ -17,8 +17,8 @@ const handleLinkedin=()=>{
     }
   return (
     <FadeInOut>
-    <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center social-media">
-  <div className="container max-w-screen-lg mx-auto">
+    <div className="p-6 bg-gray-100 flex items-center justify-center social-media">
+  <div className="container mx-auto">
     <div>
 
       <FadeInOut>
